@@ -7,8 +7,10 @@ class Coletaveis{
     public:
         Coletaveis(int v) : qtd(v) {}
 
+        virtual ~Coletaveis(){}
+
         int getQtd() const {return qtd;}
-        virtual void setQtd(int value){this->qtd = value;};
+        virtual void setQtd(int value){this->qtd = value;}
 
 };
 
@@ -21,7 +23,6 @@ class XP : public Coletaveis{
         void setQtd(int value) override{
             this->xp = value;
         }
-    
 };
 
 class Moeda : public Coletaveis{
