@@ -19,7 +19,6 @@ private:
     int moedas;
 
     // --- Helpers internos ---
-    void curar(int quantidade);
     void ganharMoeda(int quantidade);
 
 public:
