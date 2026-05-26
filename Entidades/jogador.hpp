@@ -3,15 +3,6 @@
 
 #include "coletaveis.hpp"
 
-// Espelha as cartas de upgrade do jogo original
-enum class TipoUpgrade {
-    DANO,       // +10 dano base
-    COOLDOWN,   // -10% tempo entre tiros
-    VELOCIDADE, // +1 velocidade
-    CURA,       // recupera 50 HP
-    VIDA_MAX    // +20 HP máximo
-};
-
 class Jogador {
 private:
     // --- Atributos de combate ---
@@ -19,11 +10,7 @@ private:
     int   vidaAtual;
     int   danoBase;
     int   cooldownTiro; 
-    float velocidade;
-
-    // --- Invencibilidade pós-dano ---
-    bool invencivel;
-    int  timerInvencivel;
+    int velocidade;
 
     // --- Progressão ---
     int nivel;
@@ -38,23 +25,23 @@ private:
 public:
     Jogador();
 
-    // --- Combate ---
-    bool receberDano(int dano);
-
-    void atualizarInvencibilidade();
-
+    // --- Ações de Combate ---
+    bool receberDano(int dano); 
+    
+    void curar(int quantidade);
     bool estaVivo() const { return vidaAtual > 0; }
 
-    // --- Coleta de itens ---
-    // Retorna true se o XP coletado causou level up.
+    // --- Métodos para as Cartas (Bônus) ---
+    void aumentarDano(int bonus)        { danoBase += bonus; }
+    void aumentarVelocidade(float b)    { velocidade += b; }
+    void aumentarVidaMaxima(int bonus)  { 
+        vidaMaxima += bonus; 
+        vidaAtual += bonus;
+    }
+
+    // --- Progressão e Itens ---
     bool coletarItem(Coletaveis& item);
-
-    // --- XP e level up ---
-    // Retorna true se subiu de nível
     bool ganharXP(int quantidade);
-
-    // --- Upgrades (cartas de level up) 
-    void aplicarUpgrade(TipoUpgrade tipo);
 
     // --- Getters ---
     int   getVida()         const { return vidaAtual;     }
@@ -66,9 +53,7 @@ public:
     int   getDano()         const { return danoBase;      }
     int   getCooldown()     const { return cooldownTiro;  }
     float getVelocidade()   const { return velocidade;    }
-    bool  isInvencivel()    const { return invencivel;    }
 
-    // --- Debug / terminal ---
     void exibirStatus() const;
 };
 
